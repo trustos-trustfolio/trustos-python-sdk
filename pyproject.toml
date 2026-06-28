@@ -7,14 +7,15 @@ name = "trustos"
 version = "0.1.0"
 description = "Python SDK for the Trust OS Decision Verification API"
 readme = "README.md"
-license = { text = "MIT" }
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Trustfolio Inc.", email = "admin@trust-os.io" }]
 requires-python = ">=3.9"
 dependencies = ["requests>=2.31.0"]
 keywords = ["trust-os", "decision-verification", "ai-agents", "fintech", "api-client"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
@@ -27,8 +28,9 @@ classifiers = [
 [project.urls]
 Homepage = "https://trust-os.io"
 Documentation = "https://trust-os.io/docs"
-Repository = "https://github.com/trustos-trustfolio/trustos-python-sdk"
-"Bug Tracker" = "https://github.com/trustos-trustfolio/trustos-python-sdk/issues"
+Source = "https://github.com/trustos-trustfolio/trustos-python-sdk"
+Issues = "https://github.com/trustos-trustfolio/trustos-python-sdk/issues"
+OpenAPI = "https://trust-os.io/openapi.json"
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0.0", "responses>=0.25.0"]
