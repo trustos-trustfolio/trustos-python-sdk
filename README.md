@@ -1,26 +1,32 @@
 # Trust OS Python SDK
 
-Python SDK for the [Trust OS Decision Verification API](https://trust-os.io/docs/api).
-
-Verify high-impact decisions before execution — payments, treasury operations, AI agent actions, and compliance workflows — with a single function call.
-
-## Links
-
-| Resource | URL |
-|---|---|
-| Website | https://trust-os.io |
-| Developer Docs | https://trust-os.io/docs |
-| API Reference | https://trust-os.io/docs/api |
-| Playground | https://demo.trust-os.io |
-| Operations Demo | https://ops.trust-os.io |
-| GitHub Organization | https://github.com/trustos-trustfolio |
-| OpenAPI Spec | https://trust-os.io/openapi.json |
+Official Python SDK for the Trust OS Decision Verification API.
 
 ---
 
-## Installation
+## What is Trust OS?
 
-> **PyPI release coming soon.** For now, install directly from GitHub once the repository is published:
+Trust OS is a Decision Verification Platform that helps organizations verify high-impact decisions before execution.
+
+- Decision verification
+- Risk evaluation
+- Policy enforcement
+- Auditability
+- Explainability
+- API-first integration
+
+---
+
+## Features
+
+- Pythonic client
+- requests-based
+- Typed exceptions
+- Easy integration
+
+---
+
+## Quick Start
 
 ```bash
 pip install git+https://github.com/trustos-trustfolio/trustos-python-sdk.git
@@ -31,10 +37,6 @@ Once published to PyPI:
 ```bash
 pip install trustos
 ```
-
----
-
-## Quick Start
 
 ```python
 from trustos import TrustOSClient
@@ -52,18 +54,12 @@ print(result["recommendation"])  # APPROVE | REVIEW | DENY
 print(result["proof_hash"])       # SHA-256: 0x4a3f...9c2b
 ```
 
----
-
-## Environment Variables
-
-Store your API key as an environment variable instead of hardcoding it:
+Use an environment variable instead of hardcoding:
 
 ```bash
 # .env (never commit this file)
 TRUSTOS_API_KEY=your_api_key_here
 ```
-
-The client reads `TRUSTOS_API_KEY` automatically when no `api_key=` argument is provided:
 
 ```python
 from trustos import TrustOSClient
@@ -93,13 +89,10 @@ result = client.verify_decision({
 })
 
 if result["recommendation"] == "APPROVE":
-    # safe to execute the transfer
     print("Approved:", result["decision_id"])
 elif result["recommendation"] == "REVIEW":
-    # queue for human review
     queue_for_review(result["decision_id"])
 else:
-    # block the transfer
     raise ValueError("Payment denied by Trust OS policy")
 ```
 
@@ -128,7 +121,7 @@ result = client.verify_decision({
 })
 ```
 
-More complete examples are in the [`examples/`](./examples/) directory.
+More examples in the [`examples/`](./examples/) directory.
 
 ---
 
@@ -142,13 +135,7 @@ More complete examples are in the [`examples/`](./examples/) directory.
 | `base_url` | `str \| None` | Production gateway | Override the API base URL. |
 | `timeout` | `float` | `10.0` | Request timeout in seconds. |
 
-Raises `ValueError` if no API key is found.
-
 ### `client.verify_decision(payload: dict) -> dict`
-
-Submit a decision for verification. Returns the parsed JSON response.
-
-**Request fields:**
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -160,18 +147,7 @@ Submit a decision for verification. Returns the parsed JSON response.
 | `priority` | string | No | `"High"`, `"Medium"`, or `"Low"` |
 | `metadata` | object | No | Additional context fields |
 
-**Response fields:**
-
-| Field | Type | Description |
-|---|---|---|
-| `decision_id` | string | Unique identifier — store for audit trail |
-| `recommendation` | string | `APPROVE`, `REVIEW`, or `DENY` |
-| `risk_score` | number | 0.0 (no risk) to 1.0 (maximum) |
-| `risk_level` | string | `LOW`, `MEDIUM`, or `HIGH` |
-| `policy` | string | Policy name and version applied |
-| `proof_hash` | string | SHA-256 cryptographic proof |
-| `verified` | boolean | True when cryptographically verified |
-| `latency_ms` | number | Evaluation latency in milliseconds |
+**Response fields:** `decision_id`, `recommendation`, `risk_score`, `risk_level`, `policy`, `proof_hash`, `verified`, `latency_ms`
 
 ### `client.verify(payload: dict) -> dict`
 
@@ -194,34 +170,18 @@ except TrustOSError as e:
     print(f"Message:       {e}")
 ```
 
-`TrustOSError` is raised on:
-
-- Non-2xx HTTP responses (401 unauthorized, 429 rate limit, 500 server error, etc.)
-- Network errors or timeouts
-- Invalid JSON in the response body
+`TrustOSError` is raised on non-2xx responses, network errors, and invalid JSON.
 
 ---
 
-## Security
+## Documentation
 
-- **Never commit your API key.** Use environment variables or a secrets manager.
-- **Never hardcode keys in example scripts.** All examples use `TrustOSClient()` with no inline key.
-- See [SECURITY.md](./SECURITY.md) for the vulnerability disclosure policy.
-
----
-
-## Contributing
-
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
-
----
-
-## Changelog
-
-See [CHANGELOG.md](./CHANGELOG.md) for version history.
+- Website: https://trust-os.io
+- Developer Docs: https://trust-os.io/docs
+- OpenAPI: https://trust-os.io/openapi.json
 
 ---
 
 ## License
 
-MIT — see [LICENSE](./LICENSE).
+MIT
