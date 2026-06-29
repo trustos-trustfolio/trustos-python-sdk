@@ -8,7 +8,7 @@ from typing import Any
 import requests
 
 
-DEFAULT_BASE_URL = "https://trustos-core-gateway-v2-7jm9owrs.an.gateway.dev"
+DEFAULT_BASE_URL = "https://api.trust-os.io"
 _VERIFY_PATH = "/v1/decision/verify"
 
 

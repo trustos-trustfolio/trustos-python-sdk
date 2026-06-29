@@ -9,7 +9,7 @@ import responses as resp_mock
 from trustos import TrustOSClient, TrustOSError
 
 _API_KEY = "test_api_key_abc123"
-_BASE_URL = "https://trustos-core-gateway-v2-7jm9owrs.an.gateway.dev"
+_BASE_URL = "https://api.trust-os.io"
 _VERIFY_URL = f"{_BASE_URL}/v1/decision/verify"
 
 _MOCK_RESPONSE = {
@@ -59,7 +59,7 @@ def test_trailing_slash_removed():
 def test_default_base_url():
     """Default base URL points to the production gateway."""
     client = TrustOSClient(api_key=_API_KEY)
-    assert "trustos-core-gateway" in client._base_url
+    assert "api.trust-os.io" in client._base_url
 
 
 # ── verify_decision ───────────────────────────────────────────────────────────
