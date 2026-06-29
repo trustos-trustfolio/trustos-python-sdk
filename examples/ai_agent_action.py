@@ -1,7 +1,7 @@
 """AI agent action verification example.
 
 Verifies a high-impact tool call from an autonomous agent before execution.
-Prevents unintended database writes, API calls, or financial operations.
+Prevents unintended write operations, API calls, or financial operations.
 """
 
 from trustos import TrustOSClient, TrustOSError
@@ -10,12 +10,12 @@ client = TrustOSClient()
 
 agent_action = {
     "action": "execute_tool",
-    "destination": "database_write",
+    "destination": "write_operation",
     "source": "agent-framework",
     "priority": "High",
     "metadata": {
         "tool": "write_record",
-        "table": "transactions",
+        "record_type": "transaction",
         "agent_id": "agent_alpha_001",
     },
 }

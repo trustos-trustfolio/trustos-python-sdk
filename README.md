@@ -121,7 +121,7 @@ result = client.verify_decision({
 ```python
 result = client.verify_decision({
     "action": "execute_tool",
-    "destination": "database_write",
+    "destination": "write_operation",
     "source": "agent-framework",
     "priority": "High",
     "metadata": {"tool": "write_record", "agent_id": "agent_alpha_001"},
