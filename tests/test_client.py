@@ -15,7 +15,7 @@ from trustos import TrustOSClient, TrustOSError
 
 
 def test_package_version():
-    assert trustos.__version__ == "0.1.2"
+    assert trustos.__version__ == "0.1.4"
 
 
 def test_runtime_version_matches_package_metadata():

@@ -7,6 +7,19 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.1.4] - 2026-08-05
+
+### Added
+
+- `create_decision()` method: calls `POST /decision` and returns `decision_id`, `recommendation`, `risk_score`, `risk_level`, `proof_hash`, `trace_url`, `verified`, `timestamp`.
+
+### Fixed
+
+- `trustos.__version__` and User-Agent now correctly report `0.1.4`.
+- Note: `0.1.3` is yanked — it was published with `__version__ = "0.1.2"` due to a missed update in `__init__.py`.
+
+---
+
 ## [0.1.2] - 2026-08-05
 
 ### Fixed
