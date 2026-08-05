@@ -80,7 +80,7 @@ class TrustOSClient:
         self._session.headers.update({
             "Content-Type": "application/json",
             "x-api-key": self._api_key,
-            "User-Agent": "trustos-python-sdk/0.1.0",
+            "User-Agent": "trustos-python-sdk/0.1.2",
         })
 
     def verify_decision(self, payload: dict[str, Any]) -> dict[str, Any]:

@@ -7,6 +7,14 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.1.2] - 2026-08-05
+
+### Fixed
+
+- Synchronized `trustos.__version__` with the published package version.
+
+---
+
 ## [0.1.0] — 2026-06-28
 
 ### Added

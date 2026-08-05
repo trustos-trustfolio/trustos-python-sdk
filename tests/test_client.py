@@ -2,11 +2,24 @@
 
 import os
 import json
+from importlib.metadata import version as pkg_version
 
 import pytest
 import responses as resp_mock
 
+import trustos
 from trustos import TrustOSClient, TrustOSError
+
+
+# ── version ───────────────────────────────────────────────────────────────────
+
+
+def test_package_version():
+    assert trustos.__version__ == "0.1.2"
+
+
+def test_runtime_version_matches_package_metadata():
+    assert trustos.__version__ == pkg_version("trustos")
 
 _API_KEY = "test_api_key_abc123"
 _BASE_URL = "https://trustos-core-gateway-v2-7jm9owrs.an.gateway.dev"
