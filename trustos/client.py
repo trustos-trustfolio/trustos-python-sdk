@@ -10,6 +10,7 @@ import requests
 
 DEFAULT_BASE_URL = "https://trustos-core-gateway-v2-7jm9owrs.an.gateway.dev"
 _VERIFY_PATH = "/v1/decision/verify"
+_DECISION_PATH = "/decision"
 
 
 class TrustOSError(Exception):
@@ -128,3 +129,61 @@ class TrustOSClient:
     def verify(self, payload: dict[str, Any]) -> dict[str, Any]:
         """Alias for :meth:`verify_decision`."""
         return self.verify_decision(payload)
+
+    def create_decision(
+        self,
+        decision: str,
+        *,
+        approver: str | None = None,
+        policy: str | None = None,
+        metadata: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """Submit a decision for verification via the Decision API.
+
+        Args:
+            decision: The decision type to verify (e.g. ``"stablecoin_transfer"``).
+            approver: Entity requesting the decision (e.g. ``"treasury_bot"``).
+            policy: Policy identifier to apply. Defaults to the server default.
+            metadata: Arbitrary key-value context (amount, currency, region …).
+
+        Returns:
+            Parsed JSON response containing ``decision_id``, ``recommendation``,
+            ``risk_score``, ``risk_level``, ``proof_hash``, ``trace_url``,
+            ``verified``, and ``timestamp``.
+
+        Raises:
+            TrustOSError: On non-2xx HTTP status or unparseable response.
+        """
+        payload: dict[str, Any] = {"decision": decision}
+        if approver is not None:
+            payload["approver"] = approver
+        if policy is not None:
+            payload["policy"] = policy
+        if metadata is not None:
+            payload["metadata"] = metadata
+
+        url = f"{self._base_url}{_DECISION_PATH}"
+        try:
+            response = self._session.post(url, json=payload, timeout=self._timeout)
+        except requests.RequestException as exc:
+            raise TrustOSError(f"Request failed: {exc}") from exc
+
+        if not response.ok:
+            try:
+                body = response.text
+            except Exception:
+                body = None
+            raise TrustOSError(
+                f"API error {response.status_code}: {response.reason}",
+                status_code=response.status_code,
+                response_body=body,
+            )
+
+        try:
+            return response.json()
+        except ValueError as exc:
+            raise TrustOSError(
+                "Invalid JSON in API response",
+                status_code=response.status_code,
+                response_body=response.text,
+            ) from exc
